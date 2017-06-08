@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName">
+			<value>com.mysql.jdbc.Driver</value>
+		</property>
+		<property name="url">
+			<value>jdbc:mysql://localhost/db_hellofood</value>
+		</property>
+		<property name="username">
+			<value>root</value>
+		</property>
+		<property name="password">
+			<value></value>
+		</property>
+	</bean>
+
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource">
+
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>hellofood/dao/mapping/Utilisateur.hbm.xml</value>
+				<value>hellofood/dao/mapping/Role.hbm.xml</value>
+				
+				<value>hellofood/dao/mapping/Reservation.hbm.xml</value>
+			    <value>hellofood/dao/mapping/Restaurant.hbm.xml</value>
+				<value>hellofood/dao/mapping/Table.hbm.xml</value>
+
+			</list>
+		</property>
+
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQL5Dialect
+				</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+
+				<prop key="hibernate.transaction.factory_class">
+					org.hibernate.transaction.JDBCTransactionFactory
+				</prop>
+			</props>
+
+		</property>
+
+
+	</bean>
+
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<tx:advice id="defaultTxAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+
+			<tx:method name="loadUserByUsername" propagation="REQUIRED" />
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="create*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="*" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+	<aop:config>
+		<aop:pointcut id="defaultServiceOperation"
+			expression="execution(* hellofood.services.impl.*Service*.*(..))" />
+		<aop:advisor pointcut-ref="defaultServiceOperation"
+			advice-ref="defaultTxAdvice" />
+	</aop:config>
+
+	<bean id="tableDao" class="hellofood.dao.implementation.TableDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean id="restaurantDao" class="hellofood.dao.implementation.RestaurantDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean> 
+	<bean id="reservationDao" class="hellofood.dao.implementation.ReservationDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="utilisateurDao" class="hellofood.dao.implementation.security.UtilisateurDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean id="roleDao" class="hellofood.dao.implementation.security.RoleDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	
+	<bean id="utilisateurService" class="hellofood.services.impl.UtilisateurServiceImpl">
+		<property name="userDao" ref="utilisateurDao"></property>
+		<property name="roleDao" ref="roleDao"></property>
+
+	</bean>
+	<bean id="restaurantService" class="hellofood.services.impl.RestaurantServiceImpl">
+		<property name="restoDao" ref="restaurantDao"></property>
+
+	</bean>
+	<bean id="tablService" class="hellofood.services.impl.TableServiceImpl">
+		<property name="tableDao" ref="tableDao"></property>
+
+	</bean>
+	<bean id="reservationService" class="hellofood.services.impl.ReservationServiceImpl">
+		<property name="reservationDao" ref="reservationDao"></property>
+		
+	</bean>
+	
+	
+	
+	
+    <!--struts2 actions -->
+	<!-- use prototype to force Spring to produce a new bean instance each time one is needed -->
+	<!--  we make Spring act as the Struts 2 Action class, and access the Spring’s bean. -->
+	
+	<bean id="securityAction" class="hellofood.actions.SecurityAction"
+		scope="prototype">
+		<property name="utilisateurService" ref="utilisateurService"></property>
+	</bean>
+	<bean id="adminAction" class="hellofood.actions.AdminAction"
+		scope="prototype">
+		<property name="utilisateurService" ref="utilisateurService"></property>
+	</bean>
+	<bean id="clientAction" class="hellofood.actions.ClientAction"
+		scope="prototype">
+		<property name="utilisateurService" ref="utilisateurService"></property>
+		<property name="restaurantService" ref="restaurantService"></property>
+	</bean>
+
+   
+</beans>

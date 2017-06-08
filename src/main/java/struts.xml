@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<!-- c'est Spring maintenant qui gère le cycle de vie des classes d'action -->
+	
+	<constant name="struts.objectFactory" value="spring" />
+	
+    <!--  the simple theme  behaves exactly the way we would expect regular html to behave -->
+    
+    <constant name="struts.ui.theme" value="simple" />
+    
+	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
+	
+	<constant name="struts.devMode" value="true" />
+	
+
+
+	<!--============ Zone public ============ -->
+	
+	<package name="publicPackage" namespace="/public" extends="struts-default">
+
+
+		<action name="login" class="securityAction" method="login">
+			
+			<result name="success">index.jsp</result>
+		</action>
+		
+
+	</package>
+	
+	<!--============ Zone privée ============ -->
+	
+	<package name="privatePackage" namespace="/private" extends="struts-default">
+		
+		<action name="userProfile" class="securityAction" method="userProfile">
+			<result name="successUser" type="redirectAction">user/home
+			</result>
+			<result name="successAdmin" type="redirectAction">admin/home
+			</result>
+		</action>
+		
+	</package>
+		<!--============ Zone privée - User ============ -->
+		
+	<package name="userPackage" namespace="/private/user" extends="struts-default">
+
+		<action name="home" class="clientAction" method="init">
+			<result name="success">user.jsp</result>
+		</action>
+		<action name="addPersonnel" class="clientAction" method="execute">
+			<result name="success">test.jsp</result>
+		</action>
+		
+		
+	</package>
+	
+		<!--============ Zone privée - admin ============ -->
+	
+	<package name="adminPackage" namespace="/private/admin" extends="struts-default">
+
+		<action name="home" class="adminAction" method="listPersonnel">
+			<result name="success">admin.jsp</result>
+		</action>
+		
+		
+	</package>
+	
+ 
+	
+	
+	
+	
+    
+
+</struts>

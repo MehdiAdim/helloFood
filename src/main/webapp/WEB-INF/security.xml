@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+http://www.springframework.org/schema/security
+http://www.springframework.org/schema/security/spring-security-4.2.xsd">
+	<http>
+
+		<access-denied-handler error-page="/public/index.jsp" />
+
+		<!-- permettre l'acces aux feuille de style, img, page public et JS à tous 
+			le monde -->
+		<!-- isAnonymous() or hasRole('ROLE_ANONYMOUS') -->
+		<intercept-url pattern="/css/**" access="permitAll" />
+		<intercept-url pattern="/js/**" access="permitAll" />
+		<intercept-url pattern="/images/**" access="permitAll" />
+		<intercept-url pattern="/login*" access="isAnonymous()" />
+		<intercept-url pattern="/logout*" access="isAuthenticated()" />
+		
+
+
+
+
+
+		<!-- permettre l'acces aux actions public -->
+		<intercept-url pattern="/public/**" access="isAnonymous()" />
+
+		<!-- zone privée user -->
+		<intercept-url pattern="/private/user/*" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/private/user/**" access="hasRole('ROLE_USER')" />
+
+		<!-- zone privée admin -->
+
+		<intercept-url pattern="/private/admin/*" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/private/admin/**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/private/**" access="isAuthenticated()" />
+
+		<intercept-url pattern="/**" access="denyAll" />
+
+		<form-login login-page="/public/login"
+			default-target-url="/private/userProfile"
+			authentication-failure-url="/public/login?error=1"
+			 />
+
+		<logout logout-success-url="/public/login?logout=1" logout-url="/logout"
+			delete-cookies="JSESSIONID" />
+
+	</http>
+
+	<authentication-manager>
+		<authentication-provider user-service-ref="utilisateurService">
+			<!-- <password-encoder hash="sha">
+				<salt-source user-property="username" />
+			</password-encoder> -->
+
+		</authentication-provider>
+	</authentication-manager>
+
+</beans:beans>
