@@ -12,10 +12,12 @@ import org.apache.struts2.ServletActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 /**
- * a basic class for struts action, define some useful methods to access session
+ *
+ *
+ * Basic class for struts action, define some useful methods to access session
  * and request objects
  * 
- * @author BOUDAA
+ * 
  * 
  */
 public class BaseAction extends ActionSupport {
