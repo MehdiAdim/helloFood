@@ -13,5 +13,6 @@
 	<s:property value="selectedRestaurant" />
 	<s:property value="beginDate" />
 	<s:property value="beginTime" />
+	${erreurs.get(0)}
 </body>
 </html>

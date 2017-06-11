@@ -1,4 +1,17 @@
 @CHARSET "UTF-8";
+.textT{
+	
+	font-size: 10px;
+}
+.errors {
+	background-color:#FFCCCC;
+	border:1px solid #CC0000;
+	width:400px;
+	margin-bottom:8px;
+}
+.errors li{
+	list-style: none;
+}
 
 
 

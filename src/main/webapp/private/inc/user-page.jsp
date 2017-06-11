@@ -8,11 +8,11 @@
 		</div>
 		<div class="col-sm-6 ">
 
-			<s:form action="addPersonnel" method="POST">
+			<s:form action="askReservation" method="POST">
 				<input type="hidden" name="${_csrf.parameterName}"
 					value="${_csrf.token}" />
 
-				<s:select cssClass="browser-default input-lg" label="Restaurant"
+				<s:select cssClass="browser-default input-lg textT" label="Restaurant"
 					headerKey="-1" listKey="idRestaurant" listValue="%{nomRestaurant}"
 					headerValue="Choose a restaurant ..." list="restos"
 					name="selectedRestaurant" />
@@ -32,6 +32,9 @@
 					 <s:textfield
 						cssClass="form-control " id="beginTime" name="beginTime" 
 						type="text" />
+					 <s:textfield
+						cssClass="form-control " id="endTime" name="endTime" 
+						type="text" />
 				</div>
 				
 				
@@ -40,10 +43,11 @@
 
 
 				<s:submit value="Valider" cssClass="btn btn-primary" />
+				
+				<div id="erreur1">${sessionScope.erreur }</div>
+				
+
 			</s:form>
-
-
-
 		</div>
 		<div class="col-sm-3 ">
 			<p>koko</p>

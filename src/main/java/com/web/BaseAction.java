@@ -51,6 +51,7 @@ public class BaseAction extends ActionSupport {
 
 		// store the collection in the session
 		session.setAttribute(MESSAGES, lMessages);
+		session.setAttribute("att","var");
 	}
 
 	

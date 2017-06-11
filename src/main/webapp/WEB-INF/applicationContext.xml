@@ -108,6 +108,8 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 	<bean id="utilisateurService" class="hellofood.services.impl.UtilisateurServiceImpl">
 		<property name="userDao" ref="utilisateurDao"></property>
 		<property name="roleDao" ref="roleDao"></property>
+		<property name="reservationService" ref="reservationService"></property>
+		
 
 	</bean>
 	<bean id="restaurantService" class="hellofood.services.impl.RestaurantServiceImpl">
@@ -120,8 +122,11 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 	</bean>
 	<bean id="reservationService" class="hellofood.services.impl.ReservationServiceImpl">
 		<property name="reservationDao" ref="reservationDao"></property>
-		
+		<property name="dateService" ref="dateService"></property>
 	</bean>
+	<bean id="dateService" class="hellofood.services.impl.DateServiceImpl">
+	</bean>
+	
 	
 	
 	
@@ -133,15 +138,21 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 	<bean id="securityAction" class="hellofood.actions.SecurityAction"
 		scope="prototype">
 		<property name="utilisateurService" ref="utilisateurService"></property>
+		<property name="reservationService" ref="reservationService"></property>
 	</bean>
 	<bean id="adminAction" class="hellofood.actions.AdminAction"
 		scope="prototype">
 		<property name="utilisateurService" ref="utilisateurService"></property>
+		
 	</bean>
-	<bean id="clientAction" class="hellofood.actions.ClientAction"
+	<bean id="reservationAction" class="hellofood.actions.ReservationAction"
 		scope="prototype">
 		<property name="utilisateurService" ref="utilisateurService"></property>
 		<property name="restaurantService" ref="restaurantService"></property>
+		<property name="dateService" ref="dateService"></property>
+		<property name="reservationService" ref="reservationService"></property>
+		
+		
 	</bean>
 
    

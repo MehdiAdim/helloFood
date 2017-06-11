@@ -48,11 +48,13 @@
 		
 	<package name="userPackage" namespace="/private/user" extends="struts-default">
 
-		<action name="home" class="clientAction" method="init">
+		<action name="home" class="reservationAction" method="init">
 			<result name="success">user.jsp</result>
 		</action>
-		<action name="addPersonnel" class="clientAction" method="execute">
+		<action name="askReservation" class="reservationAction" method="validateReservation">
 			<result name="success">test.jsp</result>
+			<result name="input" type="redirectAction">home</result>
+			
 		</action>
 		
 		
