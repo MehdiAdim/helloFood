@@ -12,10 +12,10 @@ import com.web.BaseAction;
 import hellofood.bo.Reservation;
 import hellofood.bo.Restaurant;
 import hellofood.bo.security.Utilisateur;
-import hellofood.services.DateService;
 import hellofood.services.ReservationService;
 import hellofood.services.RestaurantService;
 import hellofood.services.UtilisateurService;
+import hellofood.tools.DateTools;
 
 @SuppressWarnings("serial")
 public class ReservationAction extends BaseAction {
@@ -27,7 +27,7 @@ public class ReservationAction extends BaseAction {
 
 	private RestaurantService restaurantService;
 
-	private DateService dateService;
+	private DateTools dateTools;
 	
 	private ReservationService reservationService;
 
@@ -54,6 +54,14 @@ public class ReservationAction extends BaseAction {
 
 	
 	
+
+	public DateTools getDateTools() {
+		return dateTools;
+	}
+
+	public void setDateTools(DateTools dateTools) {
+		this.dateTools = dateTools;
+	}
 
 	public ReservationService getReservationService() {
 		return reservationService;
@@ -127,13 +135,17 @@ public class ReservationAction extends BaseAction {
 		this.beginTime = beginTime;
 	}
 
-	public DateService getDateService() {
-		return dateService;
+	
+
+	public DateTools getdateTools() {
+		return dateTools;
 	}
 
-	public void setDateService(DateService dateService) {
-		this.dateService = dateService;
+	public void setdateTools(DateTools dateTools) {
+		this.dateTools = dateTools;
 	}
+
+	
 
 	public String getEndTime() {
 		return endTime;
@@ -165,19 +177,19 @@ public class ReservationAction extends BaseAction {
 		
 		
 		
-		Date from =dateService.toDate(beginDate+"-"+beginTime);
-		Date end =dateService.toDate(beginDate+"-"+endTime);
+		Date from =dateTools.toDate(beginDate+"-"+beginTime);
+		Date end =dateTools.toDate(beginDate+"-"+endTime);
 		
 		
 		
-		if(!dateService.isFutureDate(from)){
+		if(!dateTools.isFutureDate(from)){
 			
 			HttpSession h=getSession();
 			h.setAttribute("erreur", " put future date please.");
 			
 			return "input";
 		}
-		if(dateService.isValideDateBeginEnd(from, end)){
+		if(dateTools.isValideDateBeginEnd(from, end)){
 			HttpSession h=getSession();
 			h.removeAttribute("erreur");
 			

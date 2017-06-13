@@ -10,10 +10,10 @@
 		</layout>
 	</appender>
 	<logger name="org.hibernate">
-		<level value="DEBUG" />
+		<level value="OFF" />
 	</logger>
 	<logger name="org.springframework">
-		<level value="DEBUG" />
+		<level value="OFF" />
 	</logger>
 	<logger name="org.apache.commons">
 		<level value="OFF" />
@@ -22,7 +22,7 @@
 		<level value="OFF" />
 	</logger>
 	<logger name="org.apache.struts2">
-		<level value="DEBUG" />
+		<level value="OFF" />
 	</logger>
 	<logger name="freemarker.beans">
 		<level value="OFF" />

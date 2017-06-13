@@ -7,7 +7,7 @@
         <dependent-module archiveName="hellofood-bll-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/hellofood-bll/hellofood-bll">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="base_spring_hibernate-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/base_spring_hibernate/base_spring_hibernate">
+        <dependent-module archiveName="backbone-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/backbone/backbone">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="context-root" value="hellofood-web"/>

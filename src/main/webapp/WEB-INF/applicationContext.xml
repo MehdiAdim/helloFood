@@ -104,11 +104,17 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	
+	<bean id="reservationService" class="hellofood.services.impl.ReservationServiceImpl">
+		<property name="reservationDao" ref="reservationDao"></property>
+		<property name="dateTools" ref="dateTools"></property>
+		
+	</bean>
 	
 	<bean id="utilisateurService" class="hellofood.services.impl.UtilisateurServiceImpl">
 		<property name="userDao" ref="utilisateurDao"></property>
 		<property name="roleDao" ref="roleDao"></property>
 		<property name="reservationService" ref="reservationService"></property>
+		<property name="loggerTools" ref="loggerTools"></property>
 		
 
 	</bean>
@@ -120,11 +126,12 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 		<property name="tableDao" ref="tableDao"></property>
 
 	</bean>
-	<bean id="reservationService" class="hellofood.services.impl.ReservationServiceImpl">
-		<property name="reservationDao" ref="reservationDao"></property>
-		<property name="dateService" ref="dateService"></property>
+	
+	
+	<bean id="dateTools" class="hellofood.tools.impl.DateToolsImpl">
 	</bean>
-	<bean id="dateService" class="hellofood.services.impl.DateServiceImpl">
+	
+	<bean id="loggerTools" class="hellofood.tools.impl.LoggerToolsImpl">
 	</bean>
 	
 	
@@ -149,9 +156,9 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 		scope="prototype">
 		<property name="utilisateurService" ref="utilisateurService"></property>
 		<property name="restaurantService" ref="restaurantService"></property>
-		<property name="dateService" ref="dateService"></property>
 		<property name="reservationService" ref="reservationService"></property>
-		
+
+		<property name="dateTools" ref="dateTools"></property>
 		
 	</bean>
 
