@@ -1,7 +1,16 @@
 @CHARSET "UTF-8";
+.info {
+    background-color: #e7f3fe;
+    border-left: 6px solid #2196F3;
+}
 .textT{
 	
 	font-size: 10px;
+}
+.div-button-user{
+	width: 100%;
+	height : 10px;
+	background-color:black;
 }
 .errors {
 	background-color:#FFCCCC;

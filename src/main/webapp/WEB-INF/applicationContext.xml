@@ -86,6 +86,9 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 			advice-ref="defaultTxAdvice" />
 	</aop:config>
 
+	
+	<!-- DAO Spring Beans -->
+	
 	<bean id="tableDao" class="hellofood.dao.implementation.TableDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
@@ -112,6 +115,9 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 		<property name="tableDao" ref="tableDao"></property>
 	</bean>
 
+	
+	<!-- Service Spring Beans -->
+
 	<bean id="utilisateurService" class="hellofood.services.impl.UtilisateurServiceImpl">
 		<property name="userDao" ref="utilisateurDao"></property>
 		<property name="roleDao" ref="roleDao"></property>
@@ -129,6 +135,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 
 	</bean>
 
+	<!-- Tools Spring Beans -->
 
 	<bean id="dateTools" class="hellofood.tools.impl.DateToolsImpl">
 	</bean>
@@ -140,16 +147,18 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 
 
 
-	<!--struts2 actions -->
-	<!-- use prototype to force Spring to produce a new bean instance each time 
-		one is needed -->
-	<!-- we make Spring act as the Struts 2 Action class, and access the Spring’s 
-		bean. -->
+	<!-- struts2 actions (Spring Beans) -->
+	
+	<!-- use prototype to force Spring to produce a new bean instance each time one is needed -->
+	
+	<!-- we make Spring act as the Struts 2 Action class, and access the Spring’s bean. -->
 
 	<bean id="securityAction" class="hellofood.actions.SecurityAction"
 		scope="prototype">
 		<property name="utilisateurService" ref="utilisateurService"></property>
 		<property name="reservationService" ref="reservationService"></property>
+		<property name="loggerTools" ref="loggerTools"></property>
+		
 	</bean>
 	<bean id="adminAction" class="hellofood.actions.AdminAction"
 		scope="prototype">

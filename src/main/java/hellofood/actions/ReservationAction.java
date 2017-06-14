@@ -39,7 +39,7 @@ public class ReservationAction extends BaseAction {
 	
 	// ----------------------------
 
-	//  struts's action properties
+	//  struts's  properties  to get from form
 
 	private Long selectedRestaurant;
 
@@ -49,7 +49,13 @@ public class ReservationAction extends BaseAction {
 
 	private String endTime;
 
+	//  struts's  properties to send to jsp
+	
 	private List<Restaurant> restos;
+	
+	private List<Reservation> userReservations;
+	
+	private List<Reservation> futureReservations;
 
 	private Utilisateur user;
 
@@ -61,6 +67,22 @@ public class ReservationAction extends BaseAction {
 
 	
 	
+
+	public List<Reservation> getFutureReservations() {
+		return futureReservations;
+	}
+
+	public void setFutureReservations(List<Reservation> futureReservations) {
+		this.futureReservations = futureReservations;
+	}
+
+	public List<Reservation> getUserReservations() {
+		return userReservations;
+	}
+
+	public void setUserReservations(List<Reservation> userReservation) {
+		this.userReservations = userReservation;
+	}
 
 	public TableService getTableService() {
 		return tableService;
@@ -178,9 +200,23 @@ public class ReservationAction extends BaseAction {
 		this.endTime = endTime;
 	}
 
-	public String init(){
-
+	public String home(){
+		
+		user=utilisateurService.getPrincipal();
+		
+		userReservations=reservationService.getReservationsByUser(user.getIdUtilisateur());
+		
 		restos=restaurantService.getAllRestaurants();
+		
+		futureReservations=new ArrayList<Reservation>();
+		
+		for(Reservation r : userReservations){
+			if(r.isNotExpired()){
+				
+				futureReservations.add(r);
+				
+			}
+		}
 		
 		
 		return SUCCESS;

@@ -4,6 +4,12 @@ $(document).ready(function(){
 	 $(".pagelinks").hide();
 	 
 	 
+	 $("#form-reservation").hide();
+	 $("#allReservation").hide();
+	 $("#userReservations").hide();
+	 $("#futureReservations").hide();
+	 
+	 
 	
 	$('#beginTime').timepicki(
 			{
@@ -40,6 +46,33 @@ $(document).ready(function(){
     
     $("#beginTime").click(function(){
         $("#erreur1").hide();
+    });
+    $("#reserve").click(function(){
+        $("#form-reservation").show();
+        $("#allReservation").hide();
+        $("#userReservations").hide();
+        $("#futureReservations").hide();
+    });
+    
+    $("#allrestos").click(function(){
+        $("#allReservation").show();
+        $("#form-reservation").hide();
+        $("#userReservations").hide();
+        $("#futureReservations").hide();
+    });
+    
+    $("#allresrv").click(function(){
+        $("#allReservation").hide();
+        $("#form-reservation").hide();
+        $("#userReservations").show();
+        $("#futureReservations").hide();
+    });
+    
+    $("#futureresrv").click(function(){
+        $("#allReservation").hide();
+        $("#form-reservation").hide();
+        $("#userReservations").hide();
+        $("#futureReservations").show();
     });
     
 });

@@ -48,7 +48,7 @@
 		
 	<package name="userPackage" namespace="/private/user" extends="struts-default">
 
-		<action name="home" class="reservationAction" method="init">
+		<action name="home" class="reservationAction" method="home">
 			<result name="success">user.jsp</result>
 		</action>
 		<action name="askReservation" class="reservationAction" method="validateReservation">

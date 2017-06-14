@@ -15,8 +15,10 @@ import com.web.BaseAction;
 import hellofood.bo.security.Utilisateur;
 import hellofood.services.UtilisateurService;
 
+@SuppressWarnings("serial")
 public class AdminAction extends BaseAction {
 	
+
 	private UtilisateurService utilisateurService;
 
 	private List<Utilisateur> users;
@@ -24,10 +26,10 @@ public class AdminAction extends BaseAction {
 	private Utilisateur user;
 
 	public String listPersonnel(){
+		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		System.out.println("User ************* has authorities: " + userDetails.getUsername());
 		
 		users= utilisateurService.getAllUsers();
 		user = utilisateurService.getPrincipal();

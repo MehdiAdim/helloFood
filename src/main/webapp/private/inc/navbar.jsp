@@ -60,13 +60,19 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#" style="padding-top:0px"><i class="material-icons upcss">lock</i></a></li>
-        <li><a href="#" style="padding-top:0px"><i class="material-icons upcss">lock</i></a></li>
-        <li><a href="#" style="padding-top:0px" ><i class="material-icons upcss">lock</i></a></li>
+ 
+        
+        
+        
         <c:if test="${!empty pageContext.request.userPrincipal}">
+        <li><a href="${pageContext.request.contextPath}/private/userProfile" style="padding-top:0px" >
+        <i class="material-icons upcss">perm_identity</i></a></li>
+		
 		<li><a href="javascript:formSubmit()" data-toggle="tooltip" title="Log Out!" style="padding-top:0px">
 			<i class="material-icons upcss">power_settings_new</i>
-		</a></li>	
+		</a></li>
+		
+			
 		</c:if>
       </ul>
     </div>
