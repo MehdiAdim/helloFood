@@ -8,6 +8,8 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
 
 
+	
+
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName">
@@ -34,9 +36,8 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 			<list>
 				<value>hellofood/dao/mapping/Utilisateur.hbm.xml</value>
 				<value>hellofood/dao/mapping/Role.hbm.xml</value>
-				
 				<value>hellofood/dao/mapping/Reservation.hbm.xml</value>
-			    <value>hellofood/dao/mapping/Restaurant.hbm.xml</value>
+				<value>hellofood/dao/mapping/Restaurant.hbm.xml</value>
 				<value>hellofood/dao/mapping/Table.hbm.xml</value>
 
 			</list>
@@ -44,14 +45,13 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 
 		<property name="hibernateProperties">
 			<props>
-				<prop key="hibernate.dialect">
-					org.hibernate.dialect.MySQL5Dialect
-				</prop>
+			
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+				
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 
-				<prop key="hibernate.transaction.factory_class">
-					org.hibernate.transaction.JDBCTransactionFactory
-				</prop>
+				<prop key="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</prop>
+				
 			</props>
 
 		</property>
@@ -89,59 +89,63 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 	<bean id="tableDao" class="hellofood.dao.implementation.TableDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
-	
+
 	<bean id="restaurantDao" class="hellofood.dao.implementation.RestaurantDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
-	</bean> 
+	</bean>
 	<bean id="reservationDao" class="hellofood.dao.implementation.ReservationDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
-	<bean id="utilisateurDao" class="hellofood.dao.implementation.security.UtilisateurDaoImpl">
+	<bean id="utilisateurDao"
+		class="hellofood.dao.implementation.security.UtilisateurDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
-	
+
 	<bean id="roleDao" class="hellofood.dao.implementation.security.RoleDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
-	
+
 	<bean id="reservationService" class="hellofood.services.impl.ReservationServiceImpl">
 		<property name="reservationDao" ref="reservationDao"></property>
 		<property name="dateTools" ref="dateTools"></property>
-		
+		<property name="loggerTools" ref="loggerTools"></property>
+		<property name="tableDao" ref="tableDao"></property>
 	</bean>
-	
+
 	<bean id="utilisateurService" class="hellofood.services.impl.UtilisateurServiceImpl">
 		<property name="userDao" ref="utilisateurDao"></property>
 		<property name="roleDao" ref="roleDao"></property>
 		<property name="reservationService" ref="reservationService"></property>
 		<property name="loggerTools" ref="loggerTools"></property>
-		
+
 
 	</bean>
 	<bean id="restaurantService" class="hellofood.services.impl.RestaurantServiceImpl">
 		<property name="restoDao" ref="restaurantDao"></property>
 
 	</bean>
-	<bean id="tablService" class="hellofood.services.impl.TableServiceImpl">
+	<bean id="tableService" class="hellofood.services.impl.TableServiceImpl">
 		<property name="tableDao" ref="tableDao"></property>
 
 	</bean>
-	
-	
+
+
 	<bean id="dateTools" class="hellofood.tools.impl.DateToolsImpl">
 	</bean>
-	
+
 	<bean id="loggerTools" class="hellofood.tools.impl.LoggerToolsImpl">
 	</bean>
-	
-	
-	
-	
-	
-    <!--struts2 actions -->
-	<!-- use prototype to force Spring to produce a new bean instance each time one is needed -->
-	<!--  we make Spring act as the Struts 2 Action class, and access the Spring’s bean. -->
-	
+
+
+
+
+
+	<!--struts2 actions -->
+	<!-- use prototype to force Spring to produce a new bean instance each time 
+		one is needed -->
+	<!-- we make Spring act as the Struts 2 Action class, and access the Spring’s 
+		bean. -->
+
 	<bean id="securityAction" class="hellofood.actions.SecurityAction"
 		scope="prototype">
 		<property name="utilisateurService" ref="utilisateurService"></property>
@@ -150,17 +154,17 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 	<bean id="adminAction" class="hellofood.actions.AdminAction"
 		scope="prototype">
 		<property name="utilisateurService" ref="utilisateurService"></property>
-		
+
 	</bean>
 	<bean id="reservationAction" class="hellofood.actions.ReservationAction"
 		scope="prototype">
 		<property name="utilisateurService" ref="utilisateurService"></property>
 		<property name="restaurantService" ref="restaurantService"></property>
 		<property name="reservationService" ref="reservationService"></property>
-
 		<property name="dateTools" ref="dateTools"></property>
-		
+		<property name="tableService" ref="tableService"></property>
+
 	</bean>
 
-   
+
 </beans>

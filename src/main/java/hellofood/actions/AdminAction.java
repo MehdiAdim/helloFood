@@ -31,7 +31,6 @@ public class AdminAction extends BaseAction {
 		
 		users= utilisateurService.getAllUsers();
 		user = utilisateurService.getPrincipal();
-		System.out.println("YOYOYOYOYOYOYOYO"+user.getLastAccessDate());
 		
 		return SUCCESS;
 
