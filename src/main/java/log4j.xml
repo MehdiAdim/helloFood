@@ -10,7 +10,7 @@
 		</layout>
 	</appender>
 	<logger name="org.hibernate">
-		<level value="DEBUG" />
+		<level value="OFF" />
 	</logger>
 	<logger name="org.springframework">
 		<level value="OFF" />

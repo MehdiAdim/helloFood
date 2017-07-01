@@ -52,8 +52,9 @@
 			<result name="success">user.jsp</result>
 		</action>
 		<action name="askReservation" class="reservationAction" method="validateReservation">
-			<result name="success">test.jsp</result>
+			<result name="success">reservationSucces.jsp</result>
 			<result name="input" type="redirectAction">home</result>
+			<result name="tableInvalid">reservationFailed.jsp</result>
 			
 		</action>
 		
@@ -65,6 +66,10 @@
 	<package name="adminPackage" namespace="/private/admin" extends="struts-default">
 
 		<action name="home" class="adminAction" method="listPersonnel">
+			<result name="success">admin.jsp</result>
+		</action>
+		
+		<action name="deleteUser" class="adminAction" method="deleteUser">
 			<result name="success">admin.jsp</result>
 		</action>
 		

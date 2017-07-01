@@ -9,14 +9,26 @@
 				</div>
 				</p>
 			</div>
-			<div class="col-sm-6">
-				<button id="buttonU" type="button" class="btn btn-default">USERS</button>
-				<button id="buttonR" type="button" class="btn btn-default">RESTAURANTS</button>
-				<button type="button" class="btn btn-default">RESERVATIONS</button>
-				<button type="button" class="btn btn-default">Default</button>
+			<div class="col-sm-8">
+				<button id="usersclick" type="button" class="btn btn-default">USERS</button>
+				<button id="deleteclick" type="button" class="btn btn-default">DELETE USERS</button>
+				<button id="restosclick" type="button" class="btn btn-default">RESTAURANTS</button>
+				<button  id="resevclick" type="button" class="btn btn-default">RESERVATIONS</button>
+				<button id="tablesclick"type="button" class="btn btn-default">TABLES</button>
+				<button id="nowclick"type="button" class="btn btn-default">OCCUPUED TABLES NOW</button>
 				
 			</div>
-			<div class="col-sm-2">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<!-- <div class="col-sm-2">
 				<p></p>
-			</div>
+			</div> -->
 </div></div>

@@ -45,8 +45,11 @@
 
 
 				<s:submit value="Valider" cssClass="btn btn-primary" />
-
-				<div id="erreur1">${sessionScope.erreur }</div>
+				<br/>
+				<br/>
+				<div class="alert alert-danger erreur1" style="padding-bottom: 5px; padding-top: 5px;">
+				  <strong>Error!</strong> ${sessionScope.erreur }
+				</div>
 
 
 			</s:form>

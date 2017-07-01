@@ -35,7 +35,9 @@ table{
  
  .bg-denied{
  	
- 	height: 245px;
+ 	height: 400px;
+ 	background-image: url("http://localhost:8080/hellofood-web/images/5.jpg");
+ 	width: 100%;
  }
  
  .txtsize{

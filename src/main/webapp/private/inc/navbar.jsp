@@ -56,7 +56,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#"><strong>helloFood</strong></a>
+      <a class="navbar-brand" href="${pageContext.request.contextPath}/public/login"><strong>helloFood</strong></a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
@@ -65,10 +65,15 @@
         
         
         <c:if test="${!empty pageContext.request.userPrincipal}">
-        <li><a href="${pageContext.request.contextPath}/private/userProfile" style="padding-top:0px" >
+        <li><a  href="${pageContext.request.contextPath}/public/login" data-toggle="tooltip" title="Welcome"
+        style="padding-top:0px" >
+		<i class="material-icons upcss">web</i></a><li>
+        
+        <li><a href="${pageContext.request.contextPath}/private/userProfile" 
+        data-toggle="tooltip" title="Home" style="padding-top:0px" >
         <i class="material-icons upcss">perm_identity</i></a></li>
 		
-		<li><a href="javascript:formSubmit()" data-toggle="tooltip" title="Log Out!" style="padding-top:0px">
+		<li><a href="javascript:formSubmit()" data-toggle="tooltip" title="Log Out" style="padding-top:0px">
 			<i class="material-icons upcss">power_settings_new</i>
 		</a></li>
 		

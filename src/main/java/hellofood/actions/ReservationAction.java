@@ -1,11 +1,16 @@
 package hellofood.actions;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.boudaa.dao.exceptions.EntityNotFoundException;
 import com.web.BaseAction;
@@ -19,6 +24,7 @@ import hellofood.services.RestaurantService;
 import hellofood.services.TableService;
 import hellofood.services.UtilisateurService;
 import hellofood.tools.DateTools;
+import hellofood.tools.LoggerTools;
 
 @SuppressWarnings("serial")
 public class ReservationAction extends BaseAction {
@@ -35,9 +41,13 @@ public class ReservationAction extends BaseAction {
 	private DateTools dateTools;
 	
 	private ReservationService reservationService;
+	
+	private LoggerTools loggerTools;
 
 	
 	// ----------------------------
+	
+	protected final Log log = LogFactory.getLog(getClass());
 
 	//  struts's  properties  to get from form
 
@@ -67,6 +77,14 @@ public class ReservationAction extends BaseAction {
 
 	
 	
+
+	public LoggerTools getLoggerTools() {
+		return loggerTools;
+	}
+
+	public void setLoggerTools(LoggerTools loggerTools) {
+		this.loggerTools = loggerTools;
+	}
 
 	public List<Reservation> getFutureReservations() {
 		return futureReservations;
@@ -225,6 +243,9 @@ public class ReservationAction extends BaseAction {
 
 	public String validateReservation(){
 		
+		
+		// service validation form
+		
 		if(selectedRestaurant==-1 || beginTime==null || endTime==null || beginDate==null){
 			
 			HttpSession h=getSession();
@@ -232,15 +253,8 @@ public class ReservationAction extends BaseAction {
 			
 			return "input";
 		}
-		
-		
-		
-		
 		Date from =dateTools.toDate(beginDate+"-"+beginTime);
 		Date end =dateTools.toDate(beginDate+"-"+endTime);
-		
-		
-		
 		if(!dateTools.isFutureDate(from)){
 			
 			HttpSession h=getSession();
@@ -248,7 +262,12 @@ public class ReservationAction extends BaseAction {
 			
 			return "input";
 		}
+		
+		
+		
 		if(dateTools.isValideDateBeginEnd(from, end)){
+			
+			loggerTools.addBox(log, "Valide");
 			HttpSession h=getSession();
 			h.removeAttribute("erreur");
 			
@@ -269,57 +288,75 @@ public class ReservationAction extends BaseAction {
 			
 			List<Table> blocked = new ArrayList<Table>();
 			List<Reservation> l =reservationService.getReservationsByRestaurant(selectedRestaurant);
+			
+			
+			DateFormat targetFormat = new SimpleDateFormat("YYYY-MM-DD hh:mm:ss");
+			
+
+			
 			if(l!=null && l.size()>0){
 				
 				for(Reservation x :l){
-					if((dateTools.isBetween(reservation.getStartReservation(),
-							x.getStartReservation(), x.getEndReservation())
-							|| dateTools.isBetween(reservation.getEndReservation(),
-									x.getStartReservation(), x.getEndReservation())
-							) && x.isNotExpired()){
+					
+					if(x.isNotExpired() &&( x.getStartReservation().getTime()==from.getTime()
+							|| dateTools.isBetween(from, x.getStartReservation(), x.getEndReservation())
+							|| dateTools.isBetween(end, x.getStartReservation(), x.getEndReservation())
+							)){
+						
 						
 						blocked.add(x.getTable());
+						loggerTools.addBox(log, "YES");
 						
 					}
 				}
+				
+				
+				/////
+				loggerTools.addBox(log, blocked.size()+" ");
 			
-			List<Table> all = tableService.getAllTables();
+			List<Table> all = tableService.getAllTablesByRestaurant(selectedRestaurant);
 			
-			for(Table y : all){
-				int i=0;
+		
+			
 				for(Table x : blocked){
 					
-					if(x.getIdTable()==y.getIdTable()){
-						i++;
+					if(all.contains(x))
+						all.remove(x);
 					}
 					
+				if(all.size()==0){
+					return "tableInvalid";
 				}
-				if(i==0){
-					try {
-						Table maTable = tableService.findTableById(y.getIdTable());
-						reservation.setTable(maTable);
+				
+				else{
+					
+					
 						
+						reservation.setTable(all.get(0));
+
+						// update reservations tables with real time
 						
+						reservationService.updateReservationDate();
+						
+						//--------------------------------------
 						reservationService.addNewReservation(reservation);
+						loggerTools.addBox(log, "RESERVATION ADDED");
+					
 						
-					} catch (EntityNotFoundException e) {
-						e.printStackTrace();
-					}
+					
+				}
+
+				
 				}
 				
-			}
-				
-				
-				
-				
-				
-				
-			}
 
 			return SUCCESS;
-		}else{
-			erreurs = new ArrayList<String>();
-			erreurs.add("erreur");
+			
+	
+	
+			}else{
+		
+			
 			HttpSession h=getSession();
 			h.setAttribute("erreur", "the begin date should be before the end date ");
 			return "input";

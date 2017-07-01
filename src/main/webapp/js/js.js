@@ -1,10 +1,16 @@
 $(document).ready(function(){
 	 $("#listusers").hide();
-	 $("#listRestau").hide();
+	 $("#allRestos").hide();
+	 $("#reservations").hide();
+	 $("#tables").hide();
+	 $("#occupiedTablesNow").hide();
+	 $("#deleteUser").hide();
+	 
+	
 	 $(".pagelinks").hide();
 	 
 	 
-	 $("#form-reservation").hide();
+
 	 $("#allReservation").hide();
 	 $("#userReservations").hide();
 	 $("#futureReservations").hide();
@@ -35,14 +41,64 @@ $(document).ready(function(){
 	);
 	
 	 
-    $("#buttonU").click(function(){
+    $("#usersclick").click(function(){
         $("#listusers").show();
-        $("#listRestau").hide();
+        $("#allRestos").hide();
+        $("#reservations").hide();
+        $("#tables").hide();
+        $("#occupiedTablesNow").hide();
+        $("#deleteUser").hide();
+
     });
-    $("#buttonR").click(function(){
-        $("#listRestau").show();
+    $("#restosclick").click(function(){
+        $("#allRestos").show();
         $("#listusers").hide();
+        $("#reservations").hide();
+        $("#tables").hide();
+        $("#occupiedTablesNow").hide();
+        $("#deleteUser").hide();
+
     });
+    $("#resevclick").click(function(){
+        $("#allRestos").hide();
+        $("#listusers").hide();
+        $("#reservations").show();
+        $("#tables").hide();
+        $("#occupiedTablesNow").hide();
+        $("#deleteUser").hide();
+
+    });
+    $("#tablesclick").click(function(){
+        $("#allRestos").hide();
+        $("#listusers").hide();
+        $("#reservations").hide();
+        $("#tables").show();
+        $("#occupiedTablesNow").hide();
+        $("#deleteUser").hide();
+    });
+    $("#nowclick").click(function(){
+        $("#allRestos").hide();
+        $("#listusers").hide();
+        $("#reservations").hide();
+        $("#tables").hide();
+        $("#occupiedTablesNow").show();
+        $("#deleteUser").hide();
+        
+    });
+    $("#deleteclick").click(function(){
+        $("#allRestos").hide();
+        $("#listusers").hide();
+        $("#reservations").hide();
+        $("#tables").hide();
+        $("#occupiedTablesNow").hide();
+        $("#deleteUser").show();
+        
+    });
+    
+    
+    
+    
+    
     
     $("#beginTime").click(function(){
         $("#erreur1").hide();
@@ -52,6 +108,7 @@ $(document).ready(function(){
         $("#allReservation").hide();
         $("#userReservations").hide();
         $("#futureReservations").hide();
+        $("#deleteUser").hide();
     });
     
     $("#allrestos").click(function(){
@@ -59,6 +116,7 @@ $(document).ready(function(){
         $("#form-reservation").hide();
         $("#userReservations").hide();
         $("#futureReservations").hide();
+        $("#deleteUser").hide();
     });
     
     $("#allresrv").click(function(){
@@ -66,6 +124,7 @@ $(document).ready(function(){
         $("#form-reservation").hide();
         $("#userReservations").show();
         $("#futureReservations").hide();
+        $("#deleteUser").hide();
     });
     
     $("#futureresrv").click(function(){
@@ -73,6 +132,7 @@ $(document).ready(function(){
         $("#form-reservation").hide();
         $("#userReservations").hide();
         $("#futureReservations").show();
+        $("#deleteUser").hide();
     });
     
 });
@@ -96,3 +156,16 @@ $(document).ready(function() {
     $('select').material_select();
     
   });
+
+function deleteSubmit() {
+    var txt;
+    var r = confirm("Are you sure ?");
+    if (r == true) {
+    	document.getElementById("submitForm").submit();
+    } else {
+       
+    }
+  
+}
+
+

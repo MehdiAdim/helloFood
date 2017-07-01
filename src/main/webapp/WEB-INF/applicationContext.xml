@@ -155,6 +155,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 
 	<bean id="securityAction" class="hellofood.actions.SecurityAction"
 		scope="prototype">
+		
 		<property name="utilisateurService" ref="utilisateurService"></property>
 		<property name="reservationService" ref="reservationService"></property>
 		<property name="loggerTools" ref="loggerTools"></property>
@@ -163,6 +164,9 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 	<bean id="adminAction" class="hellofood.actions.AdminAction"
 		scope="prototype">
 		<property name="utilisateurService" ref="utilisateurService"></property>
+		<property name="reservationService" ref="reservationService"></property>
+		<property name="restaurantService" ref="restaurantService"></property>
+		<property name="tableService" ref="tableService"></property>
 
 	</bean>
 	<bean id="reservationAction" class="hellofood.actions.ReservationAction"
@@ -172,6 +176,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 		<property name="reservationService" ref="reservationService"></property>
 		<property name="dateTools" ref="dateTools"></property>
 		<property name="tableService" ref="tableService"></property>
+		<property name="loggerTools" ref="loggerTools"></property>
 
 	</bean>
 
